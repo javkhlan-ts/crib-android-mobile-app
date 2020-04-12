@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/bottomNavSearch"
+        android:title="Search"
+        android:icon="@drawable/ic_navbar_search_24dp"/>
+
+    <item
+        android:id="@+id/bottomNavFavorites"
+        android:title="Favorites"
+        android:icon="@drawable/ic_navbar_favorite_24dp"/>
+
+    <item
+        android:id="@+id/bottomNavAlerts"
+        android:title="Alerts"
+        android:icon="@drawable/ic_navbar_alert_24dp"/>
+
+    <item
+        android:id="@+id/bottomNavAccount"
+        android:title="Account"
+        android:icon="@drawable/ic_navbar_account_24dp"/>
+</menu>
