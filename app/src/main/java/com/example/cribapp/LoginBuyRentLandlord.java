@@ -60,7 +60,7 @@ public class LoginBuyRentLandlord extends AppCompatActivity {
     }
 
     public void openActivityRegisterOrLogin(){
-        Intent intent = new Intent(this, LoginRegisterOrLogin.class);
+        Intent intent = new Intent(this, LoginLogin.class);
         startActivity(intent);
     }
 }

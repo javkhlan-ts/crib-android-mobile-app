@@ -9,6 +9,7 @@ import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,12 +25,15 @@ import org.w3c.dom.Text;
 public class LoginLogin extends AppCompatActivity {
 
     private ImageView mBackButton;
-    private TextView mForgotPassword;
+    private TextView mSignUp;
     private EditText mEmail;
     private EditText mPassword;
-    private Button mLogin;
-    private FirebaseAuth mAuth;
     private TextView mShowPassword;
+    private TextView mForgotPassword;
+    private CheckBox mRememberMe;
+    private Button mLogin;
+
+    private FirebaseAuth mAuth;
     private Boolean mHidePassword = true;
 
     @Override
@@ -38,36 +42,27 @@ public class LoginLogin extends AppCompatActivity {
         setContentView(R.layout.login_login);
 
         mBackButton = findViewById(R.id.imageViewIconBack);
-        mForgotPassword = findViewById(R.id.textViewForgotPassword);
+        mSignUp = findViewById(R.id.textViewSignUp);
         mEmail = findViewById(R.id.editTextEmailAddress);
         mPassword = findViewById(R.id.editTextPassword);
-        mLogin = findViewById(R.id.buttonLogin);
         mShowPassword = findViewById(R.id.textViewShow);
+        mRememberMe = findViewById(R.id.checkBoxRememberMe);
+        mForgotPassword = findViewById(R.id.textViewForgotPassword);
+        mLogin = findViewById(R.id.buttonLogin);
+
         mAuth = FirebaseAuth.getInstance();
 
-        mLogin.setOnClickListener(new View.OnClickListener() {
+        mBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = mEmail.getText().toString();
-                String password = mPassword.getText().toString();
+                startActivity(new Intent(LoginLogin.this, LoginBuyRentLandlord.class));
+            }
+        });
 
-                if(!email.isEmpty() && !password.isEmpty()){
-                    mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(task.isSuccessful()){
-                                Toast.makeText(LoginLogin.this, "Login successful", Toast.LENGTH_LONG).show();
-                                openMainActivity_Rent();
-                            }
-                            else{
-                                Toast.makeText(LoginLogin.this, ""+task.getException(), Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    });
-                }
-                else{
-                    Toast.makeText(LoginLogin.this, "Fill email and password to login", Toast.LENGTH_LONG).show();
-                }
+        mSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginLogin.this, LoginRegister.class));
             }
         });
 
@@ -85,17 +80,36 @@ public class LoginLogin extends AppCompatActivity {
             }
         });
 
-        mBackButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LoginLogin.this, LoginRegisterOrLogin.class));
-            }
-        });
-
         mForgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(LoginLogin.this, "Too bad", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(LoginLogin.this, LoginForgotPassword.class));
+            }
+        });
+
+        mLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email = mEmail.getText().toString();
+                String password = mPassword.getText().toString();
+
+                if(!email.isEmpty() && !password.isEmpty()){
+                    mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if(task.isSuccessful()){
+                                Toast.makeText(LoginLogin.this, "Login successful", Toast.LENGTH_LONG).show();
+                                openMainActivity_Rent();
+                            }
+                            else{
+                                Toast.makeText(LoginLogin.this, "Login error: "+task.getException(), Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
+                }
+                else{
+                    Toast.makeText(LoginLogin.this, "Fill email and password to login", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }

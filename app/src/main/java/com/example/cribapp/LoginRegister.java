@@ -25,12 +25,15 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginRegister extends AppCompatActivity {
+
     private ImageView mBackButton;
-    private Button mRegisterButton;
-    private EditText mUsername;
+    private TextView mSignIn;
     private EditText mEmail;
     private EditText mPassword;
+    private EditText mConfirmPassword;
     private TextView mShowPassword;
+    private Button mRegisterButton;
+
     private FirebaseAuth mAuth;
     private Boolean mHidePassword = true;
 
@@ -40,42 +43,26 @@ public class LoginRegister extends AppCompatActivity {
         setContentView(R.layout.login_register);
 
         mBackButton = findViewById(R.id.imageViewIconBack);
-        mRegisterButton = findViewById(R.id.buttonRegister);
-        mUsername = findViewById(R.id.editTextUsername);
+        mSignIn = findViewById(R.id.textViewSignIn);
         mEmail = findViewById(R.id.editTextEmailAddress);
         mPassword = findViewById(R.id.editTextPassword);
         mShowPassword = findViewById(R.id.textViewShow);
-        mBackButton = findViewById(R.id.imageViewIconBack);
+        mConfirmPassword = findViewById(R.id.editTextConfirmPassword);
+        mRegisterButton = findViewById(R.id.buttonRegister);
+
         mAuth = FirebaseAuth.getInstance();
 
-        //Toast.makeText(LoginRegister.this, "checkpoint", Toast.LENGTH_LONG).show();
-
-        mRegisterButton.setOnClickListener(new View.OnClickListener() {
+        mBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username = mUsername.getText().toString();
-                String email = mEmail.getText().toString();
-                String password = mPassword.getText().toString();
+                startActivity(new Intent(LoginRegister.this, LoginLogin.class));
+            }
+        });
 
-                if(!username.isEmpty() && !email.isEmpty() && !password.isEmpty()){
-                    mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(task.isSuccessful()){
-                                Toast.makeText(LoginRegister.this, "Account registered", Toast.LENGTH_LONG).show();
-                                gotoMainActivity_Rent();
-                            }
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(LoginRegister.this, "Registration failed", Toast.LENGTH_LONG).show();
-                        }
-                    });
-                }
-                else{
-                    Toast.makeText(LoginRegister.this, "Fill all fields", Toast.LENGTH_LONG).show();
-                }
+        mSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginRegister.this, LoginLogin.class));
             }
         });
 
@@ -93,16 +80,39 @@ public class LoginRegister extends AppCompatActivity {
             }
         });
 
-        mBackButton.setOnClickListener(new View.OnClickListener() {
+        mRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginRegister.this, LoginRegisterOrLogin.class));
+                String email = mEmail.getText().toString();
+                String password = mPassword.getText().toString();
+                String confirmPassword = mConfirmPassword.getText().toString();
+
+                if(!email.isEmpty() && !password.isEmpty() && !confirmPassword.isEmpty()){
+                    if(password.equals(confirmPassword)){
+                        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if(task.isSuccessful()){
+                                    Toast.makeText(LoginRegister.this, "Account registered", Toast.LENGTH_LONG).show();
+                                    gotoMainActivity_Rent();
+                                }
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(LoginRegister.this, "Registration failed", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                    else{
+                        Toast.makeText(LoginRegister.this, "Password does not match", Toast.LENGTH_LONG).show();
+                    }
+                }
+                else{
+                    Toast.makeText(LoginRegister.this, "Fill all fields", Toast.LENGTH_LONG).show();
+                }
             }
         });
-    }
-
-    public void gotoRegisterOrLogin(View view){
-        startActivity(new Intent(LoginRegister.this, LoginLogin.class));
     }
 
     public void gotoMainActivity_Rent(){

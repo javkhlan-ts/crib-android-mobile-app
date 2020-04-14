@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.cribapp">
-
     <!-- To access Google+ APIs: -->
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <!-- To access GoogleMap APIs: -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- To access GoogleMap APIs: -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -16,15 +13,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <!-- bring GoogleMaps API key to here -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/map_key"></meta-data>
+            android:value="@string/map_key" />
 
-        <activity android:name=".LoginRegister" />
-        <activity android:name=".LoginLogin" />
-        <activity android:name=".LoginRegisterOrLogin" />
         <activity android:name=".LoginBuyRentLandlord">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,6 +25,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".LoginLogin" />
+        <activity android:name=".LoginRegister" />
+        <activity android:name=".LoginForgotPassword"/>
         <activity android:name=".MainActivity_Rent" />
     </application>
 
