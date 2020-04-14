@@ -9,13 +9,16 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class MainActivity_Rent extends AppCompatActivity {
+public class MainActivity_Rent extends AppCompatActivity implements PassDataInterface {
 
     private BottomNavigationView bottomNavigationView;
+    private TextView mReceivedZip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +29,8 @@ public class MainActivity_Rent extends AppCompatActivity {
 
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavMethod);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RentSearchFragment()).commit();
+
+        mReceivedZip = findViewById(R.id.navZip);
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener bottomNavMethod = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -55,4 +60,9 @@ public class MainActivity_Rent extends AppCompatActivity {
             return true; //default was false and it worked too! not sure what it does???
         }
     };
+
+    @Override
+    public void onDataPass(String data) {
+        mReceivedZip.setText(data);
+    }
 }

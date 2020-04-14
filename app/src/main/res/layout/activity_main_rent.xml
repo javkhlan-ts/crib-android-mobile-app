@@ -25,10 +25,9 @@
             app:srcCompat="@drawable/ic_ger" />
 
         <TextView
-            android:id="@+id/navTextArea"
+            android:id="@+id/navZip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ravenswood area"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/text_size_small"
             android:layout_gravity="center"/>
