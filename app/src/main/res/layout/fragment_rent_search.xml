@@ -11,4 +11,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <SearchView
+        android:id="@+id/search_input"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/login_button_height"
+        android:background="@drawable/shape_sign_in_button"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:alpha="0.85">
+        <!--android:imeOptions="actionSearch">-->
+    </SearchView>
+
 </FrameLayout>
