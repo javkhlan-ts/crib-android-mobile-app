@@ -12,6 +12,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -21,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -33,6 +35,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
@@ -53,6 +56,7 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback {
     PassDataInterface passDataInterface;
     private SearchView mSearchText;
     private static final String TAG = RentSearchFragment.class.getName();
+    private ImageView mGps;
 
 
     public RentSearchFragment() {
@@ -76,8 +80,9 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback {
         mapFragment.getMapAsync(this);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
         mSearchText = view.findViewById(R.id.search_input);
+        mGps = view.findViewById(R.id.icon_my_location);
 
-        searchLocation();
+        init();
 
         return view;
     }
@@ -96,6 +101,9 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback {
             return;
         }
 
+        mGoogleMap.setMyLocationEnabled(true); //sets blue dot for your location
+        mGoogleMap.getUiSettings().setMyLocationButtonEnabled(false);
+
         Task<Location> task = fusedLocationProviderClient.getLastLocation();
         task.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
@@ -105,9 +113,8 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback {
                     currentLocation = location;
                     LatLng currentLatLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
                     //mGoogleMap.addMarker(new MarkerOptions().position(currentLatLng).title("Here is the current location"));
-                    mGoogleMap.setMyLocationEnabled(true); //sets blue dot for your location
-                    //remove my location button. cuz cannot change the position and need room for search bar
-                    mGoogleMap.getUiSettings().setMyLocationButtonEnabled(false);
+                    //mGoogleMap.setMyLocationEnabled(true); //sets blue dot for your location
+                    //mGoogleMap.getUiSettings().setMyLocationButtonEnabled(false); //remove default location button
                     mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, DEFAULT_ZOOM));
                 }
                 else{
@@ -125,9 +132,6 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback {
         mGoogleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
-//                mGoogleMap.clear();
-//                mGoogleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-
                 try
                 {
                     Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
@@ -145,7 +149,6 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback {
                     Toast.makeText(getActivity(), "Error: "+e.getMessage(), Toast.LENGTH_LONG).show();
                     Log.e(TAG, "onMapClick: "+e.getMessage());
                 }
-
             }
         });
     }
@@ -167,9 +170,10 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 
-    private void searchLocation(){
+    private void init(){
         Log.d(TAG, "searchLocation: searching...");
-        
+
+        //search box
         mSearchText.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -205,12 +209,71 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback {
                 return false;
             }
         });
+
+        //current location button
+        mGps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "onClick: clicked gps icon");
+                getDeviceLocation();
+            }
+        });
+    }
+
+    private void getDeviceLocation() {
+        Log.d(TAG, "getDeviceLocation: getting the devices current location");
+
+//        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
+//
+//        try{
+//            final Task location = fusedLocationProviderClient.getLastLocation();
+//            location.addOnCompleteListener(new OnCompleteListener() {
+//                @Override
+//                public void onComplete(@NonNull Task task) {
+//                    if(task.isSuccessful()){
+//                        Log.d(TAG, "onComplete: found location!");
+//                        Location currentLocation = (Location) task.getResult();
+//
+//                        moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),
+//                                DEFAULT_ZOOM, "My Location");
+//
+//                    }else{
+//                        Log.d(TAG, "onComplete: current location is null");
+//                        Toast.makeText(getActivity(), "unable to get current location", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//            });
+//        }catch (SecurityException e){
+//            Log.e(TAG, "getDeviceLocation: SecurityException: " + e.getMessage() );
+//        }
+        Task<Location> task = fusedLocationProviderClient.getLastLocation();
+        task.addOnSuccessListener(new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+
+                if(location != null){
+                    currentLocation = location;
+                    LatLng currentLatLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+                    //mGoogleMap.addMarker(new MarkerOptions().position(currentLatLng).title("Here is the current location"));
+                    //mGoogleMap.setMyLocationEnabled(true); //sets blue dot for your location
+                    //mGoogleMap.getUiSettings().setMyLocationButtonEnabled(false); //remove default location button
+                    mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, DEFAULT_ZOOM));
+                }
+                else{
+                    Log.d(TAG, "current location == null");
+                    Toast.makeText(getActivity(), "current location == null", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     private void moveCamera(LatLng latLng, int zoom, String title) {
         Log.d(TAG, "moveCamera: moving the camera to: lat: "+latLng.latitude + ", lng: "+latLng.longitude);
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
-        MarkerOptions markerOptions = new MarkerOptions().position(latLng).title(title);
-        mGoogleMap.addMarker(markerOptions);
+
+        if(!title.equals("My Location")){
+            MarkerOptions markerOptions = new MarkerOptions().position(latLng).title(title);
+            mGoogleMap.addMarker(markerOptions);
+        }
     }
 }
