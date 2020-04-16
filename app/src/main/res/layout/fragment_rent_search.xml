@@ -33,6 +33,18 @@
         </SearchView>
 
         <ImageView
+            android:id="@+id/icon_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/ic_add_24dp"
+            android:background="@drawable/icon_background"
+            android:elevation="5dp"
+            app:layout_constraintBottom_toTopOf="@+id/icon_my_location"
+            app:layout_constraintEnd_toEndOf="@+id/icon_my_location"
+            app:layout_constraintStart_toStartOf="@+id/icon_my_location" />
+
+        <ImageView
             android:id="@+id/icon_my_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

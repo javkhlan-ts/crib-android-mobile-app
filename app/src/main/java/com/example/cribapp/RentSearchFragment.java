@@ -57,6 +57,7 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback {
     private SearchView mSearchText;
     private static final String TAG = RentSearchFragment.class.getName();
     private ImageView mGps;
+    private ImageView mAdd;
 
 
     public RentSearchFragment() {
@@ -81,6 +82,7 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
         mSearchText = view.findViewById(R.id.search_input);
         mGps = view.findViewById(R.id.icon_my_location);
+        mAdd = view.findViewById(R.id.icon_add);
 
         return view;
     }
@@ -209,6 +211,15 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback {
             public void onClick(View view) {
                 Log.d(TAG, "onClick: clicked gps icon");
                 getDeviceLocation();
+            }
+        });
+
+        //add new listing
+        mAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: clicked add icon");
+                startActivity(new Intent(getActivity(), LLAddRent.class));
             }
         });
 
