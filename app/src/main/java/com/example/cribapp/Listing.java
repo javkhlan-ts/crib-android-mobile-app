@@ -6,17 +6,21 @@ public class Listing {
     private String state;
     private int zip;
     private int price;
+    private double latitude;
+    private double longitude;
 
     public Listing(){
 
     }
 
-    public Listing(String address1, String address2, String state, int zip, int price) {
+    public Listing(String address1, String address2, String state, int zip, int price, double latitude, double longitude) {
         this.address1 = address1;
         this.address2 = address2;
         this.state = state;
         this.zip = zip;
         this.price = price;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public String getAddress1() {
@@ -57,5 +61,21 @@ public class Listing {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 }

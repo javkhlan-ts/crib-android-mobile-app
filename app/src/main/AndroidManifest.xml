@@ -17,17 +17,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LLAddRent"></activity>
-        <activity android:name=".LoginBuyRentLandlord">
+        <activity android:name=".LLAddRent"
+            android:windowSoftInputMode="adjustNothing"></activity>
+        <activity android:name=".Login.LoginBuyRentLandlord">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginLogin" />
-        <activity android:name=".LoginRegister" />
-        <activity android:name=".LoginForgotPassword" />
+        <activity android:name=".Login.LoginLogin" />
+        <activity android:name=".Login.LoginRegister" />
+        <activity android:name=".Login.LoginForgotPassword" />
         <activity android:name=".MainActivity_Rent" /> <!-- bring GoogleMaps API key to here -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"

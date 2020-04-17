@@ -4,10 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -23,8 +27,13 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
 public class LLAddRent extends AppCompatActivity {
 
+    private static final String TAG = "LLAddRent";
     private EditText mAddress1;
     private EditText mAddress2;
     private Spinner mState;
@@ -35,7 +44,6 @@ public class LLAddRent extends AppCompatActivity {
     private ImageView mBack;
 
     private FirebaseFirestore db;
-
     private String stateStr;
 
     @Override
@@ -93,10 +101,23 @@ public class LLAddRent extends AppCompatActivity {
                 String address2 = mAddress2.getText().toString().trim();
                 String zip = mZip.getText().toString().trim();
                 String price = mPrice.getText().toString().trim();
+                String concatinatedAddress;
+                String [] latlong;
+                double latitude;
+                double longitude;
 
                 if(validate(address1, zip, price)){
+                    //get longitude and latitude
+                    concatinatedAddress = getLatLong();
+                    latlong = concatinatedAddress.split(",");
+                    latitude = Double.parseDouble(latlong[0]);
+                    longitude = Double.parseDouble(latlong[1]);
+                    Log.d(TAG, "onClick: latitude: "+latlong[0]+", longitude: "+latlong[1]);
+
+                    //save to Firestore
                     CollectionReference dbListing = db.collection("listing");
-                    Listing listing = new Listing (address1, address2, stateStr, Integer.parseInt(zip), Integer.parseInt(price));
+                    Listing listing = new Listing (address1, address2, stateStr, Integer.parseInt(zip), Integer.parseInt(price),
+                            latitude, longitude);
                     dbListing.add(listing).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
@@ -111,6 +132,27 @@ public class LLAddRent extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private String getLatLong() {
+        Log.d(TAG, "getLatLong: initializing");
+
+        String concatinatedAddress = "0.0,0.0";
+        String givenAddress = mAddress1.getText().toString();
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+
+        try{
+            List<Address> addressList = geocoder.getFromLocationName(givenAddress, 1);
+            if(addressList.size()>0){
+                Address address=addressList.get(0);
+                Log.d(TAG, "getLatLong: address found");
+                concatinatedAddress = address.getLatitude()+","+address.getLongitude();
+            }
+        }
+        catch (IOException e){
+            Log.e(TAG, "getLatLong: "+e.getMessage() );
+        }
+        return concatinatedAddress;
     }
 
     private boolean validate(String address1, String zip, String price) {

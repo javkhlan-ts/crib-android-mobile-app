@@ -1,4 +1,4 @@
-package com.example.cribapp;
+package com.example.cribapp.Login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.cribapp.MainActivity_Rent;
+import com.example.cribapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginBuyRentLandlord extends AppCompatActivity {

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.cribapp.Login.LoginBuyRentLandlord;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class RentAccountFragment extends Fragment {
