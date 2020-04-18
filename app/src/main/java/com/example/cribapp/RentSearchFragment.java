@@ -2,12 +2,16 @@ package com.example.cribapp;
 
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
@@ -15,6 +19,7 @@ import android.location.Location;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -69,6 +74,8 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback{
     private SearchView mSearchText;
     private ImageView mGps;
     private ImageView mAdd;
+    //private ImageView mListingDetails;
+    private Dialog mDialogListing;
 
     //for connecting Firestore and retrive listing
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -128,7 +135,8 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback{
         mGoogleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-                Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
+                ListingBottomSheet listingBottomSheet = new ListingBottomSheet();
+                listingBottomSheet.show(getFragmentManager(), "listingBottomSheet");
             }
         });
     }
