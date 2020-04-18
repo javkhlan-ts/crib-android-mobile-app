@@ -24,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -36,8 +37,13 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -47,18 +53,21 @@ import java.util.Locale;
 public class RentSearchFragment extends Fragment implements OnMapReadyCallback {
 
     private static final int DEFAULT_ZOOM = 12;
-    GoogleMap mGoogleMap;
-    SupportMapFragment mapFragment;
-    Location currentLocation;
-    FusedLocationProviderClient fusedLocationProviderClient;
     private static final int REQUEST_CODE = 101;
-    //passing data from fragment to containing activity
-    PassDataInterface passDataInterface;
-    private SearchView mSearchText;
     private static final String TAG = RentSearchFragment.class.getName();
+
+    private GoogleMap mGoogleMap;
+    private SupportMapFragment mapFragment;
+    private Location currentLocation;
+    private FusedLocationProviderClient fusedLocationProviderClient;
+    private PassDataInterface passDataInterface; //pass data from fragment to activity
+
+    private SearchView mSearchText;
     private ImageView mGps;
     private ImageView mAdd;
 
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private CollectionReference listingRef = db.collection("listing");
 
     public RentSearchFragment() {
         // Required empty public constructor
@@ -106,6 +115,36 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback {
 
         //initialize searchBar, currentLocation button, zipCode finder
         init();
+
+        loadListings();
+    }
+
+    private void loadListings() {
+        listingRef.get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
+                        for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots){
+                            Listing listing = documentSnapshot.toObject(Listing.class);
+
+                            double latitude = listing.getLatitude();
+                            double longitude = listing.getLongitude();
+
+                            //set icons
+                            MarkerOptions markerOptions = new MarkerOptions()
+                                    .position(new LatLng(latitude, longitude));
+                            mGoogleMap.addMarker(markerOptions);
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getActivity(), "loadListing: error!", Toast.LENGTH_SHORT).show();
+                        Log.e(TAG, "onFailure: loadListing: error in retriving lat and lng" );
+                    }
+                });
     }
 
     private void mapStyle(GoogleMap googleMap) {

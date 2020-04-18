@@ -1,6 +1,9 @@
 package com.example.cribapp;
 
+import com.google.firebase.firestore.Exclude;
+
 public class Listing {
+    private String listingId;
     private String address1;
     private String address2;
     private String state;
@@ -21,6 +24,15 @@ public class Listing {
         this.price = price;
         this.latitude = latitude;
         this.longitude = longitude;
+    }
+
+    @Exclude
+    public String getListingId() {
+        return listingId;
+    }
+
+    public void setListingId(String listingId) {
+        this.listingId = listingId;
     }
 
     public String getAddress1() {
@@ -78,4 +90,5 @@ public class Listing {
     public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
+
 }
