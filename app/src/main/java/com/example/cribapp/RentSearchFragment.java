@@ -4,9 +4,11 @@ package com.example.cribapp;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -14,29 +16,31 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SearchView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cribapp.Models.Listing;
+import com.example.cribapp.Utility.PassDataInterface;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -50,7 +54,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class RentSearchFragment extends Fragment implements OnMapReadyCallback {
+public class RentSearchFragment extends Fragment implements OnMapReadyCallback{
 
     private static final int DEFAULT_ZOOM = 12;
     private static final int REQUEST_CODE = 101;
@@ -66,8 +70,10 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback {
     private ImageView mGps;
     private ImageView mAdd;
 
+    //for connecting Firestore and retrive listing
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference listingRef = db.collection("listing");
+
 
     public RentSearchFragment() {
         // Required empty public constructor
@@ -116,24 +122,39 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback {
         //initialize searchBar, currentLocation button, zipCode finder
         init();
 
+        //load listings with custom icons
         loadListings();
+
+        mGoogleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void loadListings() {
+        Log.d(TAG, "loadListings: initializing");
+
         listingRef.get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
+                        if(queryDocumentSnapshots.isEmpty()){
+                            Log.e(TAG, "onSuccess: queryDocumentSnapshots.isEmpty()==true");
+                        }
+
                         for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots){
                             Listing listing = documentSnapshot.toObject(Listing.class);
-
                             double latitude = listing.getLatitude();
                             double longitude = listing.getLongitude();
+                            String price = Integer.toString(listing.getPrice());
 
-                            //set icons
                             MarkerOptions markerOptions = new MarkerOptions()
-                                    .position(new LatLng(latitude, longitude));
+                                    .position(new LatLng(latitude, longitude))
+                                    .title("$"+price)
+                                    .icon(bitmapDescriptorFromVector(getActivity(), R.drawable.ic_custom_listing_24dp));
                             mGoogleMap.addMarker(markerOptions);
                         }
                     }
@@ -142,9 +163,19 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(getActivity(), "loadListing: error!", Toast.LENGTH_SHORT).show();
-                        Log.e(TAG, "onFailure: loadListing: error in retriving lat and lng" );
+                        Log.e(TAG, "onFailure: loadListing error: either retriving or customizing the icons" );
                     }
                 });
+    }
+
+    //for customizing the marker @loadListing
+    private BitmapDescriptor bitmapDescriptorFromVector (Context context, int vectorResId){
+        Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
+        vectorDrawable.setBounds(0, 0,vectorDrawable.getIntrinsicWidth(),vectorDrawable.getIntrinsicHeight());
+        Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        vectorDrawable.draw(canvas);
+        return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 
     private void mapStyle(GoogleMap googleMap) {
@@ -204,7 +235,7 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback {
     }
 
     private void init(){
-        Log.d(TAG, "searchLocation: searching...");
+        Log.d(TAG, "init: initializing...");
 
         //search box
         mSearchText.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -264,7 +295,6 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback {
 
         showZipCode();
     }
-
 
     private void moveCamera(LatLng latLng, int zoom, String title) {
         Log.d(TAG, "moveCamera: moving the camera to: lat: "+latLng.latitude + ", lng: "+latLng.longitude);

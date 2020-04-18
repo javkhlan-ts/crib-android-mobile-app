@@ -1,4 +1,4 @@
-package com.example.cribapp;
+package com.example.cribapp.Models;
 
 import com.google.firebase.firestore.Exclude;
 
