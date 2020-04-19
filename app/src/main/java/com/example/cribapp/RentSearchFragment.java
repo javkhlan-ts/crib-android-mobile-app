@@ -29,6 +29,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -49,6 +50,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -74,13 +76,14 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback{
     private SearchView mSearchText;
     private ImageView mGps;
     private ImageView mAdd;
-    //private ImageView mListingDetails;
-    private Dialog mDialogListing;
 
     //for connecting Firestore and retrive listing
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference listingRef = db.collection("listing");
 
+    //persistent bottom sheet
+    private LinearLayout mBottomSheet;
+    private BottomSheetBehavior mBottomSheetBehavior;
 
     public RentSearchFragment() {
         // Required empty public constructor
@@ -106,6 +109,9 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback{
         mGps = view.findViewById(R.id.icon_my_location);
         mAdd = view.findViewById(R.id.icon_add);
 
+        mBottomSheet = view.findViewById(R.id.bottom_sheet);
+        mBottomSheetBehavior = BottomSheetBehavior.from(mBottomSheet);
+
         return view;
     }
 
@@ -129,14 +135,17 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback{
         //initialize searchBar, currentLocation button, zipCode finder
         init();
 
-        //load listings with custom icons
+        //load listings with custom icon
         loadListings();
 
         mGoogleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-                ListingBottomSheet listingBottomSheet = new ListingBottomSheet();
-                listingBottomSheet.show(getFragmentManager(), "listingBottomSheet");
+
+                //persistent bottom sheet shows up and hides add and location buttons
+                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                mAdd.setVisibility(View.GONE);
+                mGps.setVisibility(View.GONE);
             }
         });
     }
@@ -317,8 +326,15 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback{
     private void showZipCode() {
         //if press on map, it will fetch the zipcode and pass to MainActivity_Rent to show on navbar
         mGoogleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+
             @Override
             public void onMapClick(LatLng latLng) {
+
+                //when click on the map, it hides the persistent bottom sheet and shows add and location buttons
+                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                mAdd.setVisibility(View.VISIBLE);
+                mGps.setVisibility(View.VISIBLE);
+
                 try
                 {
                     Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());

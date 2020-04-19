@@ -32,6 +32,15 @@
             <!--android:imeOptions="actionSearch">-->
         </SearchView>
 
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include layout="@layout/bottom_sheet_listing"/>
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
         <ImageView
             android:id="@+id/icon_add"
             android:layout_width="wrap_content"
