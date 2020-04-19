@@ -84,6 +84,8 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback{
     //persistent bottom sheet
     private LinearLayout mBottomSheet;
     private BottomSheetBehavior mBottomSheetBehavior;
+    private ImageView mClose;
+    private ImageView mFavorite;
 
     public RentSearchFragment() {
         // Required empty public constructor
@@ -111,6 +113,8 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback{
 
         mBottomSheet = view.findViewById(R.id.bottom_sheet);
         mBottomSheetBehavior = BottomSheetBehavior.from(mBottomSheet);
+        mClose = view.findViewById(R.id.icon_close);
+        mFavorite = view.findViewById(R.id.icon_favorite);
 
         return view;
     }
@@ -138,6 +142,7 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback{
         //load listings with custom icon
         loadListings();
 
+        //click on icon and shows details
         mGoogleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
@@ -146,6 +151,29 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback{
                 mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                 mAdd.setVisibility(View.GONE);
                 mGps.setVisibility(View.GONE);
+
+                mClose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                        mAdd.setVisibility(View.VISIBLE);
+                        mGps.setVisibility(View.VISIBLE);
+                    }
+                });
+
+                mFavorite.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(getActivity(), "Saved to favorites", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mBottomSheet.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(getActivity(), RentListingDetails.class));
+                    }
+                });
             }
         });
     }
