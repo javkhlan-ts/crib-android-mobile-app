@@ -1,0 +1,758 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RentAddListingActivity">
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigationBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/navigation_bar_height"
+        android:background="@color/colorAccent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageViewIconBack"
+            android:layout_width="@dimen/icon_size_medium"
+            android:layout_height="@dimen/icon_size_medium"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:contentDescription="@string/back"
+            app:srcCompat="@drawable/icon_back"
+            tools:ignore="VectorDrawableCompat" />
+
+        <TextView
+            android:id="@+id/LabelAddNewListing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/add_new_listing"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_size_small" />
+
+    </com.google.android.material.navigation.NavigationView>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#f4f4f4"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp">
+
+            <TextView
+                android:id="@+id/AddressDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="66dp"
+                android:text="Address details"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/text_size_small"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/LabelStreetAddress1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:text="Street address 1"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/text_size_xsmall"
+                app:layout_constraintEnd_toStartOf="@+id/StreetAddress1"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/AddressDetails" />
+
+            <EditText
+                android:id="@+id/StreetAddress1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="1dp"
+                android:layout_weight="50"
+                android:background="@drawable/icon_background"
+                android:elevation="5dp"
+                android:inputType="text"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/text_size_xsmall"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/AddressDetails"
+                app:layout_constraintTop_toBottomOf="@+id/AddressDetails" />
+
+            <TextView
+                android:id="@+id/LabelStreetAddress2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:text="Street address 2"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/text_size_xsmall"
+                app:layout_constraintEnd_toStartOf="@+id/StreetAddress2"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/LabelStreetAddress1" />
+
+            <EditText
+                android:id="@+id/StreetAddress2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="1dp"
+                android:layout_weight="50"
+                android:background="@drawable/icon_background"
+                android:elevation="5dp"
+                android:inputType="text"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/text_size_xsmall"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/AddressDetails"
+                app:layout_constraintTop_toBottomOf="@+id/StreetAddress1" />
+
+            <TextView
+                android:id="@+id/LabelState"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:text="State"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/text_size_xsmall"
+                app:layout_constraintEnd_toStartOf="@+id/stateSpinner"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/LabelStreetAddress2" />
+
+            <Spinner
+                android:id="@+id/stateSpinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="1dp"
+                android:layout_weight="50"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/AddressDetails"
+                app:layout_constraintTop_toBottomOf="@+id/StreetAddress2" />
+
+            <TextView
+                android:id="@+id/LabelCity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:text="City"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/text_size_xsmall"
+                app:layout_constraintEnd_toStartOf="@+id/ZipCode"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/LabelState" />
+
+            <EditText
+                android:id="@+id/City"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="1dp"
+                android:layout_weight="50"
+                android:background="@drawable/icon_background"
+                android:elevation="5dp"
+                android:inputType="text"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/text_size_xsmall"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/AddressDetails"
+                app:layout_constraintTop_toBottomOf="@+id/LabelState" />
+
+            <EditText
+                android:id="@+id/ZipCode"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="1dp"
+                android:layout_weight="50"
+                android:background="@drawable/icon_background"
+                android:elevation="5dp"
+                android:inputType="text"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/text_size_xsmall"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/AddressDetails"
+                app:layout_constraintTop_toBottomOf="@+id/LabelCity" />
+
+            <TextView
+                android:id="@+id/LabelZipCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:text="Zip code"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/text_size_xsmall"
+                app:layout_constraintEnd_toStartOf="@+id/ZipCode"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/LabelCity" />
+
+            <TextView
+                android:id="@+id/LabelSquareFeet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:text="Square feet"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/text_size_xsmall"
+                app:layout_constraintEnd_toStartOf="@+id/RentPrice"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/LabelZipCode" />
+
+            <EditText
+                android:id="@+id/SquareFeet"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="1dp"
+                android:layout_weight="50"
+                android:background="@drawable/icon_background"
+                android:elevation="5dp"
+                android:inputType="text"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/text_size_xsmall"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/AddressDetails"
+                app:layout_constraintTop_toBottomOf="@+id/LabelZipCode" />
+
+            <TextView
+                android:id="@+id/LabelRentPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:text="Price"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/text_size_xsmall"
+                app:layout_constraintEnd_toStartOf="@+id/RentPrice"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/LabelSquareFeet" />
+
+            <EditText
+                android:id="@+id/RentPrice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="1dp"
+                android:layout_weight="50"
+                android:background="@drawable/icon_background"
+                android:elevation="5dp"
+                android:inputType="text"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/text_size_xsmall"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/AddressDetails"
+                app:layout_constraintTop_toBottomOf="@+id/LabelSquareFeet" />
+
+            <TextView
+                android:id="@+id/LabelBeds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Beds"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/text_size_xsmall"
+                app:layout_constraintEnd_toStartOf="@+id/RadioGroupBeds"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/LabelRentPrice" />
+
+            <RadioGroup
+                android:id="@+id/RadioGroupBeds"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/LabelBeds">
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/RadioGroupBedsStudio"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio_button_selector"
+                    android:button="@android:color/transparent"
+                    android:elevation="5dp"
+                    android:gravity="center"
+                    android:text="Studio"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/RadioGroupBeds1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio_button_selector"
+                    android:button="@android:color/transparent"
+                    android:elevation="5dp"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/RadioGroupBeds2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio_button_selector"
+                    android:button="@android:color/transparent"
+                    android:elevation="5dp"
+                    android:gravity="center"
+                    android:text="2"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/RadioGroupBeds3"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio_button_selector"
+                    android:button="@android:color/transparent"
+                    android:elevation="5dp"
+                    android:gravity="center"
+                    android:text="3"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/RadioGroupBeds4"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio_button_selector"
+                    android:button="@android:color/transparent"
+                    android:elevation="5dp"
+                    android:gravity="center"
+                    android:text="4"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/RadioGroupBeds5"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio_button_selector"
+                    android:button="@android:color/transparent"
+                    android:elevation="5dp"
+                    android:gravity="center"
+                    android:text="5+"
+                    android:textColor="@color/colorPrimaryDark" />
+
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/LabelBaths"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Baths"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/text_size_xsmall"
+                app:layout_constraintEnd_toStartOf="@+id/RadioGroupBeds"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/RadioGroupBeds" />
+
+            <RadioGroup
+                android:id="@+id/RadioGroupBaths"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/LabelBaths">
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/RadioGroupBaths1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio_button_selector"
+                    android:button="@android:color/transparent"
+                    android:elevation="5dp"
+                    android:gravity="center"
+                    android:text="1+"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/RadioGroupBaths1_5"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio_button_selector"
+                    android:button="@android:color/transparent"
+                    android:elevation="5dp"
+                    android:gravity="center"
+                    android:text="1.5+"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/RadioGroupBaths2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio_button_selector"
+                    android:button="@android:color/transparent"
+                    android:elevation="5dp"
+                    android:gravity="center"
+                    android:text="2"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/RadioGroupBaths3"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio_button_selector"
+                    android:button="@android:color/transparent"
+                    android:elevation="5dp"
+                    android:gravity="center"
+                    android:text="3"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/RadioGroupBaths4"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio_button_selector"
+                    android:button="@android:color/transparent"
+                    android:elevation="5dp"
+                    android:gravity="center"
+                    android:text="4"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/RadioGroupBaths5"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio_button_selector"
+                    android:button="@android:color/transparent"
+                    android:elevation="5dp"
+                    android:gravity="center"
+                    android:text="5+"
+                    android:textColor="@color/colorPrimaryDark" />
+
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/LabelPropertyType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Property Type"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/text_size_xsmall"
+                app:layout_constraintEnd_toStartOf="@+id/RadioGroupBeds"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/RadioGroupBaths" />
+
+            <RadioGroup
+                android:id="@+id/RadioGroupPropertyType"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/LabelPropertyType">
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/RadioGroupPropertyType1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio_button_selector"
+                    android:button="@android:color/transparent"
+                    android:elevation="5dp"
+                    android:gravity="center"
+                    android:text="Apartment"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/RadioGroupPropertyType2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio_button_selector"
+                    android:button="@android:color/transparent"
+                    android:elevation="5dp"
+                    android:gravity="center"
+                    android:text="Condo"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/RadioGroupPropertyType3"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio_button_selector"
+                    android:button="@android:color/transparent"
+                    android:elevation="5dp"
+                    android:gravity="center"
+                    android:text="Duplex"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/RadioGroupPropertyType4"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio_button_selector"
+                    android:button="@android:color/transparent"
+                    android:elevation="5dp"
+                    android:gravity="center"
+                    android:text="House"
+                    android:textColor="@color/colorPrimaryDark" />
+
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/LabelDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Description"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/text_size_xsmall"
+                app:layout_constraintEnd_toStartOf="@+id/RadioGroupBeds"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/RadioGroupPropertyType" />
+
+            <EditText
+                android:id="@+id/Description"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/icon_background"
+                android:elevation="5dp"
+                android:gravity="top|left"
+                android:inputType="text"
+                android:padding="5dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/text_size_xsmall"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/LabelDescription" />
+
+            <TextView
+                android:id="@+id/LabelAmenities"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Amenities"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/text_size_xsmall"
+                app:layout_constraintEnd_toStartOf="@+id/RadioGroupBeds"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Description" />
+
+            <CheckBox
+                android:id="@+id/checkBoxLaundry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:text="Laundry"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/LabelAmenities" />
+
+            <CheckBox
+                android:id="@+id/checkBoxDoorman"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="80dp"
+                android:text="Doorman"
+                app:layout_constraintStart_toEndOf="@+id/LabelAmenities"
+                app:layout_constraintTop_toBottomOf="@+id/LabelAmenities" />
+
+            <CheckBox
+                android:id="@+id/checkBoxAC"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:text="A/C"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxLaundry" />
+
+            <CheckBox
+                android:id="@+id/checkBoxGym"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="80dp"
+                android:text="Gym"
+                app:layout_constraintStart_toEndOf="@+id/LabelAmenities"
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxLaundry" />
+
+            <CheckBox
+                android:id="@+id/checkBoxHeating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:text="Heating"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxAC" />
+
+            <CheckBox
+                android:id="@+id/checkBoxPool"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="80dp"
+                android:text="Pool"
+                app:layout_constraintStart_toEndOf="@+id/LabelAmenities"
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxAC" />
+
+            <CheckBox
+                android:id="@+id/checkBoxParking"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:text="Parking"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxHeating" />
+
+            <CheckBox
+                android:id="@+id/checkBoxDishwasher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="80dp"
+                android:text="Dishwasher"
+                app:layout_constraintStart_toEndOf="@+id/LabelAmenities"
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxHeating" />
+
+            <CheckBox
+                android:id="@+id/checkBoxGatedEntry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:text="Gated entry"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxParking" />
+
+            <CheckBox
+                android:id="@+id/checkBoxFurnished"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="80dp"
+                android:text="Furnished"
+                app:layout_constraintStart_toEndOf="@+id/LabelAmenities"
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxParking" />
+
+            <TextView
+                android:id="@+id/LabelPhotos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Listing Photos"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/text_size_xsmall"
+                app:layout_constraintEnd_toStartOf="@+id/RadioGroupBeds"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxGatedEntry" />
+
+            <ImageView
+                android:id="@+id/ListingPhotos"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_margin="16dp"
+                android:background="@drawable/radio_button_unchecked"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/LabelPhotos" />
+
+            <Button
+                android:id="@+id/buttonChooseImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="Choose File"
+                app:layout_constraintStart_toEndOf="@+id/ListingPhotos"
+                app:layout_constraintTop_toBottomOf="@+id/LabelPhotos" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/buttonChooseImage"
+                app:layout_constraintEnd_toEndOf="@+id/buttonChooseImage"
+                app:layout_constraintStart_toStartOf="@+id/buttonChooseImage" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <Button
+        android:id="@+id/buttonSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/shape_sign_in_button"
+        android:backgroundTint="@color/colorPrimary"
+        android:elevation="10dp"
+        android:text="Save"
+        android:textColor="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/buttonCancel" />
+
+    <Button
+        android:id="@+id/buttonCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/shape_sign_in_button"
+        android:backgroundTint="@color/colorPrimary"
+        android:elevation="10dp"
+        android:text="Cancel"
+        android:textColor="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/buttonSave" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

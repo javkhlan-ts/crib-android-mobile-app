@@ -2,26 +2,47 @@ package com.example.cribapp.Models;
 
 import com.google.firebase.firestore.Exclude;
 
+import java.util.ArrayList;
+
 public class Listing {
+
     private String listingId;
     private String address1;
     private String address2;
     private String state;
+    private String city;
     private int zip;
+    private double squareFeet;
     private int price;
+    private int beds;
+    private double baths;
+    private String property;
+    private String description;
+    private ArrayList<String> amenities;
     private double latitude;
     private double longitude;
+    private String imageUrl;
 
     public Listing(){
 
     }
 
-    public Listing(String address1, String address2, String state, int zip, int price, double latitude, double longitude) {
+    public Listing(String address1, String address2, String state, String city, int zip,
+                   double squareFeet, int price, int beds, double baths, String property, String description,
+                   ArrayList<String> amenities, double latitude, double longitude)
+    {
         this.address1 = address1;
         this.address2 = address2;
         this.state = state;
+        this.city = city;
         this.zip = zip;
+        this.squareFeet = squareFeet;
         this.price = price;
+        this.beds = beds;
+        this.baths = baths;
+        this.property = property;
+        this.description = description;
+        this.amenities = amenities;
         this.latitude = latitude;
         this.longitude = longitude;
     }
@@ -59,6 +80,14 @@ public class Listing {
         this.state = state;
     }
 
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
     public int getZip() {
         return zip;
     }
@@ -67,12 +96,60 @@ public class Listing {
         this.zip = zip;
     }
 
+    public double getSquareFeet() {
+        return squareFeet;
+    }
+
+    public void setSquareFeet(double squareFeet) {
+        this.squareFeet = squareFeet;
+    }
+
     public int getPrice() {
         return price;
     }
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public int getBeds() {
+        return beds;
+    }
+
+    public void setBeds(int beds) {
+        this.beds = beds;
+    }
+
+    public double getBaths() {
+        return baths;
+    }
+
+    public void setBaths(double baths) {
+        this.baths = baths;
+    }
+
+    public String getProperty() {
+        return property;
+    }
+
+    public void setProperty(String property) {
+        this.property = property;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public ArrayList<String> getAmenities() {
+        return amenities;
+    }
+
+    public void setAmenities(ArrayList<String> amenities) {
+        this.amenities = amenities;
     }
 
     public double getLatitude() {
@@ -91,4 +168,7 @@ public class Listing {
         this.longitude = longitude;
     }
 
+    public String getImageUrl(){
+        return imageUrl;
+    }
 }

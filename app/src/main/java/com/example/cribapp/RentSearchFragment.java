@@ -2,16 +2,12 @@ package com.example.cribapp;
 
 
 import android.Manifest;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
@@ -19,7 +15,6 @@ import android.location.Location;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -31,8 +26,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.cribapp.Models.Listing;
 import com.example.cribapp.Utility.PassDataInterface;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -47,14 +44,18 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -87,6 +88,12 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback{
     private ImageView mClose;
     private ImageView mFavorite;
 
+    private ImageView mListingImage;
+    private TextView mPrice;
+    private TextView mBedBath;
+    private TextView mAddress;
+    private FirebaseFirestore mFirebaseFirestore;
+
     public RentSearchFragment() {
         // Required empty public constructor
     }
@@ -116,6 +123,11 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback{
         mClose = view.findViewById(R.id.icon_close);
         mFavorite = view.findViewById(R.id.icon_favorite);
 
+        mListingImage = view.findViewById(R.id.listing_image);
+        mPrice = view.findViewById(R.id.listing_price);
+        mBedBath = view.findViewById(R.id.listing_bedroom_bath);
+        mAddress = view.findViewById(R.id.listing_address);
+
         return view;
     }
 
@@ -131,7 +143,7 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback{
 
         //set current location blue dot
         mGoogleMap.setMyLocationEnabled(true); //sets blue dot for your location
-        mGoogleMap.getUiSettings().setMyLocationButtonEnabled(false);
+        mGoogleMap.getUiSettings().setMyLocationButtonEnabled(false); //remove default current location icon
 
         //go to current location
         getDeviceLocation();
@@ -141,11 +153,93 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback{
 
         //load listings with custom icon
         loadListings();
+    }
+
+    private void loadListings() {
+        Log.d(TAG, "loadListings: initializing");
+
+        listingRef.get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
+                        if(queryDocumentSnapshots.isEmpty()){
+                            Log.e(TAG, "onSuccess: queryDocumentSnapshots.isEmpty()==true");
+                        }
+
+                        for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots){
+                            Listing listing = documentSnapshot.toObject(Listing.class);
+                            double latitude = listing.getLatitude();
+                            double longitude = listing.getLongitude();
+                            String price = Integer.toString(listing.getPrice());
+                            String tag = listing.getImageUrl();
+
+                            MarkerOptions markerOptions = new MarkerOptions()
+                                    .position(new LatLng(latitude, longitude))
+                                    .title("$"+price)
+                                    .icon(bitmapDescriptorFromVector(getActivity(), R.drawable.ic_custom_listing_24dp));
+                            mGoogleMap.addMarker(markerOptions);
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getActivity(), "loadListing: error!", Toast.LENGTH_SHORT).show();
+                        Log.e(TAG, "onFailure: loadListing error: either retriving or customizing the icons" );
+                    }
+                });
 
         //click on icon and shows details
         mGoogleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
-            public void onInfoWindowClick(Marker marker) {
+            public void onInfoWindowClick(final Marker marker) {
+
+                //get document id from the marker click
+                CollectionReference listingRef = db.collection("listing");
+                listingRef.whereEqualTo("latitude", marker.getPosition().latitude)
+                        .whereEqualTo("longitude", marker.getPosition().longitude)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if(task.isSuccessful()){
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Log.d(TAG, "loadListing: setOnInfoWindowClickListener: " + document.getId() + " => " + document.getData());
+
+                                        //now everything is stored in document object and document.getId() retrieves the id.
+                                        //need to set bottom_sheet_listing.xml before it is STATE_EXPANDED
+
+                                        String imageUrl = document.getString("imageUrl");
+                                        Log.d(TAG, "loadListing: document.getString(): " + document.getString("imageUrl"));
+                                        Log.d(TAG, "loadListing: imageUrl: " + imageUrl);
+                                        //Picasso.get().load(imageUrl).into(mListingImage);
+                                        Glide.with(getContext()).load(imageUrl).into(mListingImage);
+                                        //Glide is working, PROBLEM IS imageUrl is WRONG! Check again!
+
+                                        //set other text views
+                                        String price = document.get("price").toString();
+                                        String bed = document.get("beds").toString();
+                                        String bath = document.get("baths").toString();
+                                        String address = document.getString("address1");
+
+                                        mPrice.setText("$"+price);
+                                        mBedBath.setText("Bed "+bed+" | Bath "+bath);
+                                        mAddress.setText(address);
+
+                                        Log.d(TAG, "loadListing: price: "+price);
+                                        Log.d(TAG, "loadListing: bed: "+bed);
+                                        Log.d(TAG, "loadListing: bath: "+bath);
+                                        Log.d(TAG, "loadListing: address: "+address);
+
+                                    }
+                                } else {
+                                    Log.d(TAG, "Error getting documents: ", task.getException());
+                                }
+                            }
+                        });
+
+                Log.d(TAG, "loadListing: marker.getId(): "+marker.getId());
 
                 //persistent bottom sheet shows up and hides add and location buttons
                 mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
@@ -171,46 +265,11 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback{
                 mBottomSheet.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(new Intent(getActivity(), RentListingDetails.class));
+                        startActivity(new Intent(getActivity(), RentListingDetailsActivity.class));
                     }
                 });
             }
         });
-    }
-
-    private void loadListings() {
-        Log.d(TAG, "loadListings: initializing");
-
-        listingRef.get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-
-                        if(queryDocumentSnapshots.isEmpty()){
-                            Log.e(TAG, "onSuccess: queryDocumentSnapshots.isEmpty()==true");
-                        }
-
-                        for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots){
-                            Listing listing = documentSnapshot.toObject(Listing.class);
-                            double latitude = listing.getLatitude();
-                            double longitude = listing.getLongitude();
-                            String price = Integer.toString(listing.getPrice());
-
-                            MarkerOptions markerOptions = new MarkerOptions()
-                                    .position(new LatLng(latitude, longitude))
-                                    .title("$"+price)
-                                    .icon(bitmapDescriptorFromVector(getActivity(), R.drawable.ic_custom_listing_24dp));
-                            mGoogleMap.addMarker(markerOptions);
-                        }
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getActivity(), "loadListing: error!", Toast.LENGTH_SHORT).show();
-                        Log.e(TAG, "onFailure: loadListing error: either retriving or customizing the icons" );
-                    }
-                });
     }
 
     //for customizing the marker @loadListing
@@ -334,7 +393,7 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback{
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: clicked add icon");
-                startActivity(new Intent(getActivity(), LLAddRent.class));
+                startActivity(new Intent(getActivity(), RentAddListingActivity.class));
             }
         });
 
@@ -352,7 +411,7 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback{
     }
 
     private void showZipCode() {
-        //if press on map, it will fetch the zipcode and pass to MainActivity_Rent to show on navbar
+        //if press on map, it will fetch the zipcode and pass to RentMainActivity to show on navbar
         mGoogleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
 
             @Override
@@ -373,7 +432,7 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback{
                     if(addresses!=null && addresses.size()>0)
                     {
                         String postal_code = addresses.get(0).getPostalCode();
-                        //pass to MainActivity_Rent to show on navbar
+                        //pass to RentMainActivity to show on navbar
                         passDataInterface.onDataPass(postal_code);
                     }
                 }

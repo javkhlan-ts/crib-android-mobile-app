@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.cribapp.Login.LoginBuyRentLandlord;
+import com.example.cribapp.Login.LoginMainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class RentAccountFragment extends Fragment {
@@ -32,7 +32,7 @@ public class RentAccountFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mAuth.signOut();
-                startActivity(new Intent(getActivity(), LoginBuyRentLandlord.class));
+                startActivity(new Intent(getActivity(), LoginMainActivity.class));
             }
         });
 
