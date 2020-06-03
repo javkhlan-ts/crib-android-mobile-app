@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -32,36 +33,161 @@
             android:text="Listing details"
             android:layout_gravity="center"/>
 
-        <ImageView
-            android:id="@+id/imageViewFavorites"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+        <CheckBox
+            android:id="@+id/checkbox_favorites"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="end|center_vertical"
-            android:layout_marginRight="10dp"
-            app:srcCompat="@drawable/ic_favorite_24dp" />
+            android:button="@drawable/favorites_checkbox_selector"
+            android:layout_marginRight="10dp"/>
+
     </com.google.android.material.navigation.NavigationView>
 
-    <ImageView
-        android:id="@+id/listing_images"
-        android:layout_width="wrap_content"
-        android:layout_height="250dp"
-        android:scaleType="center"
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:layout_marginTop="@dimen/navigation_bar_height"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/navigationBar"
-        app:srcCompat="@drawable/dummy_listing_pic1" />
+        app:layout_constraintTop_toBottomOf="@+id/navigationBar">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Details coming soon..."
-        android:textSize="20dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listing_images" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
+            <!--   This ImageView should turn to Horizontal RecyclerView to show multiple images   -->
+            <ImageView
+                android:id="@+id/listing_images"
+                android:layout_width="wrap_content"
+                android:layout_height="250dp"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/dummy_listing_pic1" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/listing_bed_bath_sqft"
+                    android:layout_width="match_parent"
+                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="1 bed | 1 bath | 300 sqft"
+                    android:layout_margin="5dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/text_size_xsmall"/>
+                <TextView
+                    android:id="@+id/listing_price"
+                    android:layout_width="match_parent"
+                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="$1000"
+                    android:layout_margin="5dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/text_size_xsmall"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/listing_address"
+                    android:layout_width="match_parent"
+                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="4444 N Damen Ave"
+                    android:layout_margin="5dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/text_size_xsmall"/>
+                <TextView
+                    android:id="@+id/listing_type"
+                    android:layout_width="match_parent"
+                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="Apartment"
+                    android:layout_margin="5dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/text_size_xsmall"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/button_request_visit"
+                    android:layout_width="@dimen/login_button_width_small"
+                    android:layout_height="@dimen/login_button_height"
+                    android:layout_margin="5dp"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/shape_sign_in_button"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:text="REQUEST VISIT"
+                    android:textColor="@color/colorWhite"/>
+
+                <Button
+                    android:id="@+id/button_apply"
+                    android:layout_width="@dimen/login_button_width_small"
+                    android:layout_height="@dimen/login_button_height"
+                    android:layout_margin="5dp"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/shape_sign_in_button"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:text="APPLY"
+                    android:textColor="@color/colorWhite"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Description"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/text_size_small"
+                    android:layout_margin="5dp" />
+                <TextView
+                    android:id="@+id/listing_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="details coming soon..."/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Amenities"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/text_size_small"
+                    android:layout_margin="5dp" />
+                <TextView
+                    android:id="@+id/listing_amenities"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="amenities coming soon..."/>
+
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

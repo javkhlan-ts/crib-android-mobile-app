@@ -4,15 +4,20 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.cribapp.Utility.PassDataInterface;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.api.LogDescriptor;
 
 public class RentMainActivity extends AppCompatActivity implements PassDataInterface {
 
+    private static final String TAG = "RentMainActivity";
+    public static final String FRAGMENT_ID = "receivedFragmentId";
     private BottomNavigationView bottomNavigationView;
     private TextView mReceivedZip;
 
@@ -22,9 +27,24 @@ public class RentMainActivity extends AppCompatActivity implements PassDataInter
         setContentView(R.layout.activity_rent_main);
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
-
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavMethod);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RentSearchFragment()).commit();
+
+        Intent intent = getIntent();
+        String fragmentId = intent.getStringExtra(FRAGMENT_ID)==null ? "0" : intent.getStringExtra(FRAGMENT_ID);
+        switch (fragmentId){
+            case "1":
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RentFavoritesFragement()).commit();
+                break;
+            case "2":
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RentAlertsFragment()).commit();
+                break;
+            case "3":
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RentAccountFragment()).commit();
+                break;
+            default:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RentSearchFragment()).commit();
+                break;
+        }
 
         mReceivedZip = findViewById(R.id.navZip);
     }

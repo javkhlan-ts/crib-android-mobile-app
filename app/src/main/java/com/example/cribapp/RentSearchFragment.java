@@ -92,7 +92,6 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback{
     private TextView mPrice;
     private TextView mBedBath;
     private TextView mAddress;
-    private FirebaseFirestore mFirebaseFirestore;
 
     public RentSearchFragment() {
         // Required empty public constructor
@@ -172,7 +171,6 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback{
                             double latitude = listing.getLatitude();
                             double longitude = listing.getLongitude();
                             String price = Integer.toString(listing.getPrice());
-                            String tag = listing.getImageUrl();
 
                             MarkerOptions markerOptions = new MarkerOptions()
                                     .position(new LatLng(latitude, longitude))
@@ -204,18 +202,11 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback{
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                 if(task.isSuccessful()){
-                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                    for (final QueryDocumentSnapshot document : task.getResult()) {
                                         Log.d(TAG, "loadListing: setOnInfoWindowClickListener: " + document.getId() + " => " + document.getData());
 
-                                        //now everything is stored in document object and document.getId() retrieves the id.
-                                        //need to set bottom_sheet_listing.xml before it is STATE_EXPANDED
-
                                         String imageUrl = document.getString("imageUrl");
-                                        Log.d(TAG, "loadListing: document.getString(): " + document.getString("imageUrl"));
-                                        Log.d(TAG, "loadListing: imageUrl: " + imageUrl);
-                                        //Picasso.get().load(imageUrl).into(mListingImage);
                                         Glide.with(getContext()).load(imageUrl).into(mListingImage);
-                                        //Glide is working, PROBLEM IS imageUrl is WRONG! Check again!
 
                                         //set other text views
                                         String price = document.get("price").toString();
@@ -227,20 +218,24 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback{
                                         mBedBath.setText("Bed "+bed+" | Bath "+bath);
                                         mAddress.setText(address);
 
-                                        Log.d(TAG, "loadListing: price: "+price);
-                                        Log.d(TAG, "loadListing: bed: "+bed);
-                                        Log.d(TAG, "loadListing: bath: "+bath);
-                                        Log.d(TAG, "loadListing: address: "+address);
-
+                                        mBottomSheet.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                String listingId = document.getId();
+                                                String fragmentId = "0";
+                                                Intent intent = new Intent(getActivity(), RentListingDetailsActivity.class);
+                                                intent.putExtra(RentListingDetailsActivity.LISTING_ID, listingId);
+                                                intent.putExtra(RentListingDetailsActivity.FRAGMENT_ID, fragmentId);
+                                                Log.d(TAG, "onClickBottomSheet: listingId: "+listingId);
+                                                startActivity(intent);
+                                            }
+                                        });
                                     }
                                 } else {
                                     Log.d(TAG, "Error getting documents: ", task.getException());
                                 }
                             }
                         });
-
-                Log.d(TAG, "loadListing: marker.getId(): "+marker.getId());
-
                 //persistent bottom sheet shows up and hides add and location buttons
                 mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                 mAdd.setVisibility(View.GONE);
@@ -262,12 +257,12 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback{
                     }
                 });
 
-                mBottomSheet.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        startActivity(new Intent(getActivity(), RentListingDetailsActivity.class));
-                    }
-                });
+//                mBottomSheet.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        startActivity(new Intent(getActivity(), RentListingDetailsActivity.class));
+//                    }
+//                });
             }
         });
     }
