@@ -6,13 +6,11 @@ import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.cribapp.Utility.PassDataInterface;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.api.LogDescriptor;
 
 public class RentMainActivity extends AppCompatActivity implements PassDataInterface {
 
@@ -28,12 +26,13 @@ public class RentMainActivity extends AppCompatActivity implements PassDataInter
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavMethod);
+        mReceivedZip = findViewById(R.id.navZip);
 
         Intent intent = getIntent();
         String fragmentId = intent.getStringExtra(FRAGMENT_ID)==null ? "0" : intent.getStringExtra(FRAGMENT_ID);
         switch (fragmentId){
             case "1":
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RentFavoritesFragement()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RentFavoritesFragment()).commit();
                 break;
             case "2":
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RentAlertsFragment()).commit();
@@ -45,8 +44,6 @@ public class RentMainActivity extends AppCompatActivity implements PassDataInter
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RentSearchFragment()).commit();
                 break;
         }
-
-        mReceivedZip = findViewById(R.id.navZip);
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener bottomNavMethod = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -61,7 +58,7 @@ public class RentMainActivity extends AppCompatActivity implements PassDataInter
                     fragment = new RentSearchFragment();
                     break;
                 case R.id.bottomNavFavorites:
-                    fragment = new RentFavoritesFragement();
+                    fragment = new RentFavoritesFragment();
                     break;
                 case R.id.bottomNavAlerts:
                     fragment = new RentAlertsFragment();

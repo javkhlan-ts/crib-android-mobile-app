@@ -111,7 +111,7 @@ public class RentListingDetailsActivity extends AppCompatActivity implements Com
                         mType.setText(type);
                         mDescription.setText(desc);
 
-                        //set favorites when startup
+                        //set favorites when going into listing details
                         Intent intent = getIntent();
                         final String listingId = intent.getStringExtra(LISTING_ID);
                         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();

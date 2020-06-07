@@ -6,33 +6,61 @@
     android:layout_height="match_parent"
     tools:context=".RentAccountFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="account fragment"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/button_account_settings"
+            android:layout_width="250dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/shape_sign_in_button"
+            android:text="Account Settings"
+            android:textColor="@color/colorWhite"
+            android:backgroundTint="@color/colorPrimary"
+            android:layout_gravity="center_horizontal"/>
+        <Button
+            android:id="@+id/button_my_application"
+            android:layout_width="250dp"
+            android:layout_height="30dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/shape_sign_in_button"
+            android:text="My Application"
+            android:textColor="@color/colorWhite"
+            android:backgroundTint="@color/colorPrimary"
+            android:layout_gravity="center_horizontal"/>
+        <Button
+            android:id="@+id/button_payment_methods"
+            android:layout_width="250dp"
+            android:layout_height="30dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/shape_sign_in_button"
+            android:text="Payment Methods"
+            android:textColor="@color/colorWhite"
+            android:backgroundTint="@color/colorPrimary"
+            android:layout_gravity="center_horizontal"/>
+        <Button
+            android:id="@+id/button_switch_account"
+            android:layout_width="250dp"
+            android:layout_height="30dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/shape_sign_in_button"
+            android:text="Switch Account"
+            android:textColor="@color/colorWhite"
+            android:backgroundTint="@color/colorPrimary"
+            android:layout_gravity="center_horizontal"/>
 
         <Button
             android:id="@+id/buttonLogout"
-            android:layout_width="150dp"
+            android:layout_width="250dp"
             android:layout_height="30dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/shape_sign_in_button"
             android:text="@string/logout"
             android:textColor="@color/colorWhite"
             android:backgroundTint="@color/colorPrimary"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_gravity="center_horizontal|bottom"/>
+    </LinearLayout>
 </FrameLayout>

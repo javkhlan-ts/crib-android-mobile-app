@@ -572,7 +572,7 @@
                 android:background="@drawable/icon_background"
                 android:elevation="5dp"
                 android:gravity="top|left"
-                android:inputType="text"
+                android:inputType="textMultiLine"
                 android:padding="5dp"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="@dimen/text_size_xsmall"

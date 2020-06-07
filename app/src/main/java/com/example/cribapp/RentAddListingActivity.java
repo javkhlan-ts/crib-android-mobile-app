@@ -9,7 +9,6 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
@@ -25,7 +24,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.cribapp.Models.Listing;
-import com.example.cribapp.Models.shareImageUrl;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -37,7 +35,6 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
@@ -86,7 +83,6 @@ public class RentAddListingActivity extends AppCompatActivity {
     private StorageTask mUploadTask;
 
     //private String mImageUrl; //global variable returns null
-    private shareImageUrl mSharedImageUrl;
     private FirebaseFirestore mFirebaseFirestore;
 
     @Override
@@ -129,7 +125,6 @@ public class RentAddListingActivity extends AppCompatActivity {
         mStorageRef = FirebaseStorage.getInstance().getReference("uploads");
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("listing");
 
-        mSharedImageUrl = new shareImageUrl();
         mFirebaseFirestore = FirebaseFirestore.getInstance();
 
         initStateSpinner();
