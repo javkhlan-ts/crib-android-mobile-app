@@ -17,7 +17,6 @@ import android.widget.Toast;
 import com.example.cribapp.General.ContactUsActivity;
 import com.example.cribapp.General.PrivacyPolicyActivity;
 import com.example.cribapp.General.TermsOfUseActivity;
-import com.example.cribapp.Utility.PassDataInterface;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;

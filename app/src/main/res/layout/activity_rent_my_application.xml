@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".RentMyApplicationActivity">
 
     <com.google.android.material.navigation.NavigationView
@@ -33,4 +35,212 @@
             android:layout_gravity="center"/>
     </com.google.android.material.navigation.NavigationView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Application Form"
+            android:textSize="16dp"
+            android:layout_marginBottom="8dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
+            <ImageView
+                android:id="@+id/myapplication_application_form"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="left"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                android:background="@drawable/empty_image_border"
+                android:layout_weight="1" />
+            <Button
+                android:id="@+id/applicationform_download"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginLeft="16dp"
+                android:text="Download"
+                android:textColor="@color/colorWhite"
+                android:layout_weight="1"
+                android:background="@drawable/shape_sign_in_button"
+                android:backgroundTint="@color/colorPrimary"/>
+            <Button
+                android:id="@+id/applicationform_upload"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginLeft="16dp"
+                android:text="Upload"
+                android:textColor="@color/colorWhite"
+                android:layout_weight="1"
+                android:background="@drawable/shape_sign_in_button"
+                android:backgroundTint="@color/colorPrimary"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Paystub"
+            android:textSize="16dp"
+            android:layout_marginBottom="8dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
+            <ImageView
+                android:id="@+id/myapplication_paystub"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="left"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                android:background="@drawable/empty_image_border"
+                android:layout_weight="1" />
+            <Button
+                android:id="@+id/paystub_download"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginLeft="16dp"
+                android:text="Download"
+                android:textColor="@color/colorWhite"
+                android:layout_weight="1"
+                android:background="@drawable/shape_sign_in_button"
+                android:backgroundTint="@color/colorPrimary"/>
+            <Button
+                android:id="@+id/paystub_upload"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginLeft="16dp"
+                android:text="Upload"
+                android:textColor="@color/colorWhite"
+                android:layout_weight="1"
+                android:background="@drawable/shape_sign_in_button"
+                android:backgroundTint="@color/colorPrimary"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bank Statement"
+            android:textSize="16dp"
+            android:layout_marginBottom="8dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
+            <ImageView
+                android:id="@+id/myapplication_bank_statement"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="left"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                android:background="@drawable/empty_image_border"
+                android:layout_weight="1" />
+            <Button
+                android:id="@+id/bankstatement_download"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginLeft="16dp"
+                android:text="Download"
+                android:textColor="@color/colorWhite"
+                android:layout_weight="1"
+                android:background="@drawable/shape_sign_in_button"
+                android:backgroundTint="@color/colorPrimary"/>
+            <Button
+                android:id="@+id/bankstatement_upload"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginLeft="16dp"
+                android:text="Upload"
+                android:textColor="@color/colorWhite"
+                android:layout_weight="1"
+                android:background="@drawable/shape_sign_in_button"
+                android:backgroundTint="@color/colorPrimary"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="I.D."
+            android:textSize="16dp"
+            android:layout_marginBottom="8dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
+            <ImageView
+                android:id="@+id/myapplication_id"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="left"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                android:background="@drawable/empty_image_border"
+                android:layout_weight="1" />
+            <Button
+                android:id="@+id/id_download"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginLeft="16dp"
+                android:text="Download"
+                android:textColor="@color/colorWhite"
+                android:layout_weight="1"
+                android:background="@drawable/shape_sign_in_button"
+                android:backgroundTint="@color/colorPrimary"/>
+            <Button
+                android:id="@+id/id_upload"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginLeft="16dp"
+                android:text="Upload"
+                android:textColor="@color/colorWhite"
+                android:layout_weight="1"
+                android:background="@drawable/shape_sign_in_button"
+                android:backgroundTint="@color/colorPrimary"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

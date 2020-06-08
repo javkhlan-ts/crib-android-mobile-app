@@ -44,8 +44,10 @@
         android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -700,17 +702,20 @@
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_margin="16dp"
-                android:background="@drawable/radio_button_unchecked"
+                android:background="@drawable/empty_image_border"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/LabelPhotos" />
 
             <Button
                 android:id="@+id/buttonChooseImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="120dp"
+                android:layout_height="30dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:text="Choose File"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/shape_sign_in_button"
+                android:backgroundTint="@color/colorPrimary"
+                android:text="Choose photo"
+                android:textColor="@color/colorWhite"
                 app:layout_constraintStart_toEndOf="@+id/ListingPhotos"
                 app:layout_constraintTop_toBottomOf="@+id/LabelPhotos" />
 
@@ -720,9 +725,9 @@
                 android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:layout_constraintTop_toBottomOf="@+id/buttonChooseImage"
                 app:layout_constraintEnd_toEndOf="@+id/buttonChooseImage"
-                app:layout_constraintStart_toStartOf="@+id/buttonChooseImage" />
+                app:layout_constraintStart_toStartOf="@+id/buttonChooseImage"
+                app:layout_constraintTop_toBottomOf="@+id/buttonChooseImage" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
