@@ -34,13 +34,13 @@
             android:layout_gravity="top|right"
             app:srcCompat="@drawable/ic_close_24dp" />
 
-        <ImageView
-            android:id="@+id/icon_favorite"
-            android:layout_margin="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|left"
-            app:srcCompat="@drawable/ic_favorite_24dp" />
+<!--        <ImageView-->
+<!--            android:id="@+id/icon_favorite"-->
+<!--            android:layout_margin="5dp"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="top|left"-->
+<!--            app:srcCompat="@drawable/ic_favorite_24dp" />-->
     </FrameLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -20,7 +20,6 @@
         <activity android:name=".General.ContactUsActivity"></activity>
         <activity android:name=".General.PrivacyPolicyActivity" />
         <activity android:name=".General.TermsOfUseActivity" />
-        <activity android:name=".RentPaymentMethods" />
         <activity android:name=".RentMyApplicationActivity" />
         <activity android:name=".RentAccountSettingsActivity" />
         <activity android:name=".RentListingDetailsActivity" />

@@ -178,7 +178,8 @@ public class RentListingDetailsActivity extends AppCompatActivity implements Com
                         favoriteListingRef.updateChildren(listingToSave);
                         Toast.makeText(RentListingDetailsActivity.this, "Listing saved", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(RentListingDetailsActivity.this, "Already saved in favorites", Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "onDataChange: listing is already in favorites.");
+                        //Toast.makeText(RentListingDetailsActivity.this, "Already saved in favorites", Toast.LENGTH_SHORT).show();
                     }
                 }
 

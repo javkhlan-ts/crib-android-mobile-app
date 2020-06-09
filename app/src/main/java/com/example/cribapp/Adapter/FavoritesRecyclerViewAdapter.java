@@ -1,6 +1,7 @@
 package com.example.cribapp.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.cribapp.R;
+import com.example.cribapp.RentListingDetailsActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -26,6 +34,7 @@ public class FavoritesRecyclerViewAdapter extends RecyclerView.Adapter<Favorites
     private ArrayList<String> mPriceArrayList = new ArrayList<>();
     private ArrayList<String> mAddressArrayList = new ArrayList<>();
     private ArrayList<String> mTypeArrayList = new ArrayList<>();
+
     private Context mContext;
 
     //Command+N to create constructor
@@ -68,7 +77,36 @@ public class FavoritesRecyclerViewAdapter extends RecyclerView.Adapter<Favorites
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: clicked on "+mAddressArrayList.get(position ));
-                Toast.makeText(mContext, mAddressArrayList.get(position), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mContext, mAddressArrayList.get(position), Toast.LENGTH_SHORT).show();
+
+                FirebaseFirestore.getInstance().collection("listing")
+                        .whereEqualTo("address1", mAddressArrayList.get(position))
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Log.d(TAG, document.getId() + " => " + document.getData());
+
+                                        String listingId = document.getId();
+                                        String fragmentId = "1";
+                                        Intent intent = new Intent(mContext, RentListingDetailsActivity.class);
+                                        intent.putExtra(RentListingDetailsActivity.LISTING_ID, listingId);
+                                        intent.putExtra(RentListingDetailsActivity.FRAGMENT_ID, fragmentId);
+                                        mContext.startActivity(intent);
+                                    }
+                                } else {
+                                    Log.d(TAG, "Error getting documents: ", task.getException());
+                                }
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.e(TAG, "onFailure: "+e.getMessage());
+                            }
+                        });
             }
         });
     }

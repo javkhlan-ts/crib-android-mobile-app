@@ -86,7 +86,7 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback{
     private LinearLayout mBottomSheet;
     private BottomSheetBehavior mBottomSheetBehavior;
     private ImageView mClose;
-    private ImageView mFavorite;
+    //private ImageView mFavorite;
 
     private ImageView mListingImage;
     private TextView mPrice;
@@ -120,7 +120,7 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback{
         mBottomSheet = view.findViewById(R.id.bottom_sheet);
         mBottomSheetBehavior = BottomSheetBehavior.from(mBottomSheet);
         mClose = view.findViewById(R.id.icon_close);
-        mFavorite = view.findViewById(R.id.icon_favorite);
+        //mFavorite = view.findViewById(R.id.icon_favorite);
 
         mListingImage = view.findViewById(R.id.listing_image);
         mPrice = view.findViewById(R.id.listing_price);
@@ -250,12 +250,12 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback{
                     }
                 });
 
-                mFavorite.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(getActivity(), "Saved to favorites", Toast.LENGTH_SHORT).show();
-                    }
-                });
+//                mFavorite.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Toast.makeText(getActivity(), "Saved to favorites", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
 
 //                mBottomSheet.setOnClickListener(new View.OnClickListener() {
 //                    @Override

@@ -31,36 +31,28 @@
             android:textColor="@color/colorWhite"
             android:backgroundTint="@color/colorPrimary"
             android:layout_gravity="center_horizontal"/>
-        <Button
-            android:id="@+id/button_payment_methods"
-            android:layout_width="250dp"
-            android:layout_height="30dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/shape_sign_in_button"
-            android:text="Payment Methods"
-            android:textColor="@color/colorWhite"
-            android:backgroundTint="@color/colorPrimary"
-            android:layout_gravity="center_horizontal"/>
-        <Button
-            android:id="@+id/button_switch_account"
-            android:layout_width="250dp"
-            android:layout_height="30dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/shape_sign_in_button"
-            android:text="Switch Account"
-            android:textColor="@color/colorWhite"
-            android:backgroundTint="@color/colorPrimary"
-            android:layout_gravity="center_horizontal"/>
 
-        <Button
-            android:id="@+id/buttonLogout"
-            android:layout_width="250dp"
-            android:layout_height="30dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/shape_sign_in_button"
-            android:text="@string/logout"
-            android:textColor="@color/colorWhite"
-            android:backgroundTint="@color/colorPrimary"
-            android:layout_gravity="center_horizontal|bottom"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="bottom">
+            <TextView
+                android:id="@+id/loggedin_user_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="8dp"/>
+            <Button
+                android:id="@+id/buttonLogout"
+                android:layout_width="250dp"
+                android:layout_height="30dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/shape_sign_in_button"
+                android:text="@string/logout"
+                android:textColor="@color/colorWhite"
+                android:backgroundTint="@color/colorPrimary"
+                android:layout_gravity="center_horizontal|bottom"/>
+        </LinearLayout>
     </LinearLayout>
 </FrameLayout>

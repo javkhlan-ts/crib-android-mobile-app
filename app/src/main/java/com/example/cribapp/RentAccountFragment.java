@@ -13,7 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.example.cribapp.Login.LoginMainActivity;
 import com.example.cribapp.Utility.PassDataInterface;
@@ -23,11 +23,10 @@ public class RentAccountFragment extends Fragment {
     private static final String TAG = "RentAccountFragment";
     private FirebaseAuth mAuth;
 
-    //buttons
+    //variables
     private Button mAccountSettings;
     private Button mMyApplication;
-    private Button mPaymentMethod;
-    private Button mSwitchAccount;
+    private TextView mLoggedInUserEmail;
     private Button mLogoutButton;
 
     //to pass title from frag to activity navbar
@@ -50,11 +49,14 @@ public class RentAccountFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         mAccountSettings = view.findViewById(R.id.button_account_settings);
         mMyApplication = view.findViewById(R.id.button_my_application);
-        mPaymentMethod = view.findViewById(R.id.button_payment_methods);
-        mSwitchAccount = view.findViewById(R.id.button_switch_account);
+        mLoggedInUserEmail = view.findViewById(R.id.loggedin_user_email);
         mLogoutButton = view.findViewById(R.id.buttonLogout);
 
         passTitleFromFragToRentMainActivity.onDataPass("Account");
+
+        if(mAuth.getCurrentUser().getEmail()!=null){
+            mLoggedInUserEmail.setText(mAuth.getCurrentUser().getEmail());
+        }
 
         initButtons();
 
@@ -83,20 +85,6 @@ public class RentAccountFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), RentMyApplicationActivity.class);
                 intent.putExtra(RentMyApplicationActivity.FRAGMENT_ID, fragmentId);
                 startActivity(intent);
-            }
-        });
-
-        mPaymentMethod.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity(), "Payment Method clicked.", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        mSwitchAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity(), "Switch Account is in process...", Toast.LENGTH_SHORT).show();
             }
         });
 
