@@ -49,6 +49,7 @@ import java.util.Map;
 public class RentAddListingActivity extends AppCompatActivity {
 
     private static final String TAG = "RentAddListingActivity";
+    
     private EditText mAddress1;
     private EditText mAddress2;
     private Spinner mState;
@@ -102,6 +103,7 @@ public class RentAddListingActivity extends AppCompatActivity {
         mPropertyType = findViewById(R.id.RadioGroupPropertyType);
         mDescription = findViewById(R.id.Description);
 
+        //checkboxes
         mLaundry = findViewById(R.id.checkBoxLaundry);
         mAC = findViewById(R.id.checkBoxAC);
         mHeating = findViewById(R.id.checkBoxHeating);
@@ -127,11 +129,17 @@ public class RentAddListingActivity extends AppCompatActivity {
 
         mFirebaseFirestore = FirebaseFirestore.getInstance();
 
+        //NEVER initialize ArrayList<String> list and use. => Null Pointer Exception
+        //ALWAYS create something in the HEAP and point to it as follows
+        mAmenities = new ArrayList<>();
+
+        updateAmenities();
         initStateSpinner();
         addListenerOnButton();
     }
 
     private void addListenerOnButton() {
+        Log.d(TAG, "addListenerOnButton: started.");
         mState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -320,86 +328,131 @@ public class RentAddListingActivity extends AppCompatActivity {
     }
 
     private void updateAmenities() {
+        Log.d(TAG, "updateAmenities: started.");
         mLaundry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mLaundry.isChecked())
+                if(mLaundry.isChecked()){
                     mAmenities.add("Laundry");
+                    Log.d(TAG, "onClick: mAmenities: "+mAmenities.toString());
+                } else {
+                    mAmenities.remove("Laundry");
+                }
             }
         });
         mAC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mAC.isChecked())
+                if(mAC.isChecked()){
                     mAmenities.add("AC");
+                    Log.d(TAG, "onClick: mAmenities: "+mAmenities.toString());
+                } else {
+                    mAmenities.remove("AC");
+                }
             }
         });
         mHeating.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mHeating.isChecked())
+                if(mHeating.isChecked()){
                     mAmenities.add("Heating");
+                    Log.d(TAG, "onClick: mAmenities: "+mAmenities.toString());
+                } else {
+                    mAmenities.remove("Heating");
+                }
             }
         });
         mParking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mParking.isChecked())
+                if(mParking.isChecked()){
                     mAmenities.add("Parking");
+                    Log.d(TAG, "onClick: mAmenities: "+mAmenities.toString());
+                } else {
+                    mAmenities.remove("Parking");
+                }
             }
         });
         mGatedEntry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mGatedEntry.isChecked())
-                    mAmenities.add("Gated Entry");
+                if(mGatedEntry.isChecked()){
+                    mAmenities.add("Gated entry");
+                    Log.d(TAG, "onClick: mAmenities: "+mAmenities.toString());
+                } else {
+                    mAmenities.remove("Gated entry");
+                }
             }
         });
         mDoorman.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mDoorman.isChecked())
+                if(mDoorman.isChecked()){
                     mAmenities.add("Doorman");
+                    Log.d(TAG, "onClick: mAmenities: "+mAmenities.toString());
+                } else {
+                    mAmenities.remove("Doorman");
+                }
             }
         });
         mGym.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mGym.isChecked())
+                if(mGym.isChecked()){
                     mAmenities.add("Gym");
+                    Log.d(TAG, "onClick: mAmenities: "+mAmenities.toString());
+                } else {
+                    mAmenities.remove("Gym");
+                }
             }
         });
         mPool.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mPool.isChecked())
+                if(mPool.isChecked()){
                     mAmenities.add("Pool");
+                    Log.d(TAG, "onClick: mAmenities: "+mAmenities.toString());
+                } else {
+                    mAmenities.remove("Pool");
+                }
             }
         });
         mDishwasher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mDishwasher.isChecked())
+                if(mDishwasher.isChecked()){
                     mAmenities.add("Dishwasher");
+                    Log.d(TAG, "onClick: mAmenities: "+mAmenities.toString());
+                } else {
+                    mAmenities.remove("Dishwasher");
+                }
             }
         });
         mFurnished.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mFurnished.isChecked())
+                if(mFurnished.isChecked()){
                     mAmenities.add("Furnished");
+                    Log.d(TAG, "onClick: mAmenities: "+mAmenities.toString());
+                } else {
+                    mAmenities.remove("Furnished");
+                }
             }
         });
+
+        Log.d(TAG, "updateAmenities: ended.");
     }
 
     private String getFileExtension(Uri uri) {
+        Log.d(TAG, "getFileExtension: started.");
         ContentResolver cR = getContentResolver();
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return mime.getExtensionFromMimeType(cR.getType(uri));
     }
 
     private void uploadImage(final String listingId){
-        Log.d(TAG, "uploadImage: initiated. Passed listingId: "+listingId);
+        Log.d(TAG, "uploadImage: started.");
+        Log.d(TAG, "uploadImage: listingId: "+listingId);
         if (mImageUri != null) {
             final StorageReference fileReference = mStorageRef.child(System.currentTimeMillis()
                     + "." + getFileExtension(mImageUri));
@@ -494,6 +547,7 @@ public class RentAddListingActivity extends AppCompatActivity {
     }
 
     private void initStateSpinner() {
+        Log.d(TAG, "initStateSpinner: started.");
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(RentAddListingActivity.this,
                 android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.states_list));
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

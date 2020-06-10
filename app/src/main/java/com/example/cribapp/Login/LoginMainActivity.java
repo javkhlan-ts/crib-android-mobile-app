@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.cribapp.RentMainActivity;
 import com.example.cribapp.R;
@@ -14,7 +15,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class LoginMainActivity extends AppCompatActivity {
 
     private Button buttonRent;
-    private Button buttonBuy;
+    //private Button buttonBuy;
     private Button buttonLandlord;
     private FirebaseAuth mAuth;
 
@@ -24,7 +25,7 @@ public class LoginMainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login_main);
 
         buttonRent = findViewById(R.id.buttonRent);
-        buttonBuy = findViewById(R.id.buttonBuy);
+        //buttonBuy = findViewById(R.id.buttonBuy);
         buttonLandlord = findViewById(R.id.buttonLandlord);
         mAuth = FirebaseAuth.getInstance();
 
@@ -38,17 +39,17 @@ public class LoginMainActivity extends AppCompatActivity {
             }
         });
 
-        buttonBuy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
-                openActivityRegisterOrLogin();
-            }
-        });
+//        buttonBuy.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v){
+//                openActivityRegisterOrLogin();
+//            }
+//        });
 
         buttonLandlord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
-                openActivityRegisterOrLogin();
+                Toast.makeText(LoginMainActivity.this, "Under construction...", Toast.LENGTH_SHORT).show();
             }
         });
     }

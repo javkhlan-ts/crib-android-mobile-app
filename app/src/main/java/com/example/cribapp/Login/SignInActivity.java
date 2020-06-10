@@ -30,7 +30,7 @@ public class SignInActivity extends AppCompatActivity {
     private EditText mPassword;
     private TextView mShowPassword;
     private TextView mForgotPassword;
-    private CheckBox mRememberMe;
+    //private CheckBox mRememberMe;
     private Button mLogin;
 
     private FirebaseAuth mAuth;
@@ -46,7 +46,7 @@ public class SignInActivity extends AppCompatActivity {
         mEmail = findViewById(R.id.editTextEmailAddress);
         mPassword = findViewById(R.id.editTextPassword);
         mShowPassword = findViewById(R.id.textViewShow);
-        mRememberMe = findViewById(R.id.checkBoxRememberMe);
+        //mRememberMe = findViewById(R.id.checkBoxRememberMe);
         mForgotPassword = findViewById(R.id.textViewForgotPassword);
         mLogin = findViewById(R.id.buttonLogin);
 
@@ -102,7 +102,7 @@ public class SignInActivity extends AppCompatActivity {
                                 openMainActivity_Rent();
                             }
                             else{
-                                Toast.makeText(SignInActivity.this, "Login error: "+task.getException(), Toast.LENGTH_LONG).show();
+                                Toast.makeText(SignInActivity.this, "Invalid password or user.", Toast.LENGTH_LONG).show();
                             }
                         }
                     });

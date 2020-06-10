@@ -117,7 +117,7 @@ public class RentAccountSettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //pull up email and send reset link
-                String newPassword = mChangePassword.getText().toString();
+                String newPassword = mChangePasswordEditText.getText().toString();
                 FirebaseUser user = mAuth.getCurrentUser();
 
                 if(newPassword!=null){
@@ -152,6 +152,7 @@ public class RentAccountSettingsActivity extends AppCompatActivity {
     public void showAboutDialog(){
         AlertDialog.Builder mAboutDialog = new AlertDialog.Builder(this);
         mAboutDialog.setTitle("About crib");
+        //can't justify dialog-textview, since there is no direct access to it
         mAboutDialog.setMessage("Title: Crib Real Estate\n"
                 +"Version: 1.0.3\n\n"
                 + "Crib helps you buy or sell homes, combining tecnology and a customer-service focus to make whole process easier and less expensive."

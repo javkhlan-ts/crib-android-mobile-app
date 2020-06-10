@@ -123,7 +123,7 @@
         android:layout_height="wrap_content"
         android:text="@string/show"
         android:textColor="@color/colorWhite"
-        android:textSize="@dimen/text_size_small"
+        android:textSize="@dimen/text_size_xsmall"
         app:layout_constraintBottom_toTopOf="@+id/editTextPassword"
         app:layout_constraintEnd_toEndOf="@+id/editTextPassword"
         app:layout_constraintHorizontal_bias="1.0"

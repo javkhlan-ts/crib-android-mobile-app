@@ -57,7 +57,10 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.DocumentFragment;
+
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -208,14 +211,22 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback{
                                         String imageUrl = document.getString("imageUrl");
                                         Glide.with(getContext()).load(imageUrl).into(mListingImage);
 
+                                        //1.0=>1
+                                        DecimalFormat decimalFormat = new DecimalFormat("0.#");
                                         //set other text views
                                         String price = document.get("price").toString();
                                         String bed = document.get("beds").toString();
-                                        String bath = document.get("baths").toString();
+                                        String bath = decimalFormat.format(document.get("baths"));
+                                        //String bath = document.get("baths").toString();
                                         String address = document.getString("address1");
 
                                         mPrice.setText("$"+price);
-                                        mBedBath.setText("Bed "+bed+" | Bath "+bath);
+                                        if(bed.equals("0")){
+                                            mBedBath.setText("Studio"+" | "+bath+ " bath");
+                                        } else {
+                                            mBedBath.setText(bed+" bed | "+bath+ " bath");
+                                        }
+                                        //mBedBath.setText("Bed "+bed+" | Bath "+bath);
                                         mAddress.setText(address);
 
                                         mBottomSheet.setOnClickListener(new View.OnClickListener() {

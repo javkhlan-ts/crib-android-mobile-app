@@ -37,12 +37,12 @@
 
     <Button
         android:id="@+id/buttonRent"
-        android:layout_width="120dp"
+        android:layout_width="250dp"
         android:layout_height="40dp"
         android:layout_marginTop="@dimen/vertical_margin"
         android:layout_marginBottom="@dimen/vertical_margin"
         android:background="@drawable/shape_sign_in_button"
-        android:text="@string/rent"
+        android:text="I want to rent"
         android:textColor="@color/colorPrimaryDark"
         app:layout_constraintBottom_toTopOf="@+id/buttonLandlord"
         app:layout_constraintEnd_toEndOf="@+id/textVIewTitleCrib"
@@ -50,20 +50,20 @@
         app:layout_constraintStart_toStartOf="@+id/textVIewTitleCrib"
         app:layout_constraintTop_toBottomOf="@+id/textVIewTitleCrib" />
 
-    <Button
-        android:id="@+id/buttonBuy"
-        android:layout_width="@dimen/login_button_width_small"
-        android:layout_height="@dimen/login_button_height"
-        android:layout_marginTop="@dimen/vertical_margin"
-        android:layout_marginBottom="@dimen/vertical_margin"
-        android:background="@drawable/shape_sign_in_button"
-        android:text="@string/buy"
-        android:textColor="@color/colorPrimaryDark"
-        app:layout_constraintBottom_toTopOf="@+id/buttonLandlord"
-        app:layout_constraintEnd_toEndOf="@+id/textVIewTitleCrib"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textVIewTitleCrib"
-        app:layout_constraintTop_toBottomOf="@+id/textVIewTitleCrib" />
+<!--    <Button-->
+<!--        android:id="@+id/buttonBuy"-->
+<!--        android:layout_width="@dimen/login_button_width_small"-->
+<!--        android:layout_height="@dimen/login_button_height"-->
+<!--        android:layout_marginTop="@dimen/vertical_margin"-->
+<!--        android:layout_marginBottom="@dimen/vertical_margin"-->
+<!--        android:background="@drawable/shape_sign_in_button"-->
+<!--        android:text="@string/buy"-->
+<!--        android:textColor="@color/colorPrimaryDark"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/buttonLandlord"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/textVIewTitleCrib"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/textVIewTitleCrib"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textVIewTitleCrib" />-->
 
     <Button
         android:id="@+id/buttonLandlord"
