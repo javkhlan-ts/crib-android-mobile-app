@@ -373,7 +373,7 @@ public class RentSearchFragment extends Fragment implements OnMapReadyCallback{
                 }
                 else
                 {
-                    Toast.makeText(getActivity(), "geocoder.getFromLocationName: null", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Location not found.", Toast.LENGTH_LONG).show();
                     Log.d(TAG, "geocoder.getFromLocationName: null");
                 }
                 return false;

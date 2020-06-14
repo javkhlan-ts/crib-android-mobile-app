@@ -73,6 +73,7 @@ public class RentMyApplicationActivity extends AppCompatActivity {
     private Uri mImageUri;
 
     private int imageViewId;
+    private DocumentReference mApplicationRef;
 
 
     @Override
@@ -99,6 +100,8 @@ public class RentMyApplicationActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mFirestore = FirebaseFirestore.getInstance();
         mStorageRef = FirebaseStorage.getInstance().getReference("uploads");
+        mApplicationRef = mFirestore.collection("myApplication").document(mAuth.getCurrentUser().getUid());
+        Log.d(TAG, "onCreate: Applicatoin Ref: "+mApplicationRef.toString());
 
         //for now, crib can upload image to database, but cannot delete it when new image is uploaded
         //old images become garbage
@@ -243,6 +246,8 @@ public class RentMyApplicationActivity extends AppCompatActivity {
                             } else {
                                 Toast.makeText(RentMyApplicationActivity.this, "Application form does not exist.", Toast.LENGTH_SHORT).show();
                             }
+                        } else {
+                            Toast.makeText(RentMyApplicationActivity.this, "Application form does not exist.", Toast.LENGTH_SHORT).show();
                         }
                         if(imageViewId==1) {
                             if (documentSnapshot.getString("Paystub") != null) {
@@ -257,6 +262,8 @@ public class RentMyApplicationActivity extends AppCompatActivity {
                             } else {
                                 Toast.makeText(RentMyApplicationActivity.this, "Paystub does not exist.", Toast.LENGTH_SHORT).show();
                             }
+                        } else {
+                            Toast.makeText(RentMyApplicationActivity.this, "Paystub does not exist.", Toast.LENGTH_SHORT).show();
                         }
                         if(imageViewId==2) {
                             if (documentSnapshot.getString("BankStatement") != null) {
@@ -271,6 +278,8 @@ public class RentMyApplicationActivity extends AppCompatActivity {
                             } else {
                                 Toast.makeText(RentMyApplicationActivity.this, "Bank statement does not exist.", Toast.LENGTH_SHORT).show();
                             }
+                        } else {
+                            Toast.makeText(RentMyApplicationActivity.this, "Bank statement does not exist.", Toast.LENGTH_SHORT).show();
                         }
                         if(imageViewId==3) {
                             if (documentSnapshot.getString("Id") != null) {
@@ -285,8 +294,12 @@ public class RentMyApplicationActivity extends AppCompatActivity {
                             } else {
                                 Toast.makeText(RentMyApplicationActivity.this, "I.D. does not exist.", Toast.LENGTH_SHORT).show();
                             }
+                        } else {
+                            Toast.makeText(RentMyApplicationActivity.this, "I.D. does not exist.", Toast.LENGTH_SHORT).show();
                         }
                     }
+                } else {
+                    Toast.makeText(RentMyApplicationActivity.this, "No file to download.", Toast.LENGTH_SHORT).show();
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -395,8 +408,9 @@ public class RentMyApplicationActivity extends AppCompatActivity {
                         Uri downloadUri = task.getResult();
                         Log.d(TAG, "onComplete: docKey: "+docKey);
                         Log.d(TAG, "onComplete: docUri: "+downloadUri.toString());
+                        Log.d(TAG, "onComplete: userId: "+mAuth.getCurrentUser().getUid());
 
-                        Map<String, Object> docMyApplication = new HashMap<>();
+                        final Map<String, Object> docMyApplication = new HashMap<>();
                         docMyApplication.put(docKey, downloadUri.toString());
 
                         //save to Firestore
@@ -406,16 +420,33 @@ public class RentMyApplicationActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         Toast.makeText(RentMyApplicationActivity.this, "Upload Successful.", Toast.LENGTH_SHORT).show();
-                                        Log.d(TAG, "onSuccess: Upload to firestore success.");
+                                        Log.d(TAG, "onSuccess: Upload to existing FireStore Document is successful.");
                                         if(progressDialog.isShowing()){
                                             progressDialog.dismiss();
                                         }
                                     }
-                                }).addOnFailureListener(new OnFailureListener() {
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(RentMyApplicationActivity.this, "Upload Failed!", Toast.LENGTH_SHORT).show();
-                                Log.d(TAG, "onFailure: Upload to firestore failed.");
+                                mFirestore.collection("myApplication").document(mAuth.getCurrentUser().getUid())
+                                        .set(docMyApplication)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Toast.makeText(RentMyApplicationActivity.this, "Upload successful.", Toast.LENGTH_SHORT).show();
+                                                Log.d(TAG, "onSuccess: Created new Firestore Document and upload to it is successful.");
+                                                if(progressDialog.isShowing()){
+                                                    progressDialog.dismiss();
+                                                }
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(RentMyApplicationActivity.this, "Upload Failed!", Toast.LENGTH_SHORT).show();
+                                        Log.d(TAG, "onFailure: Upload to firestore failed: "+e.getMessage());
+                                    }
+                                });
                             }
                         });
                     }
